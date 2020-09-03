@@ -19,18 +19,29 @@ class DatabaseSeeder extends Seeder
 //           $category->posts()->save(factory(\App\Post::class)->make(['category_id'=>$category->id]));
 //        });
 //        factory(\App\Category::class,10)->create();
-        $tags = factory(\App\Tag::class,20)->create();
-        $categories = factory(\App\Category::class,10)->create();
 
-        factory(\App\User::class,10)->create()->each(function ($user) use ($categories,$tags){
 
+
+
+
+//        $tags = factory(\App\Tag::class,20)->create();
+//        $categories = factory(\App\Category::class,10)->create();
+//
+//        factory(\App\User::class,10)->create()->each(function ($user) use ($categories,$tags){
+//
 //            dd($categories->random());
-           $user->posts()->save(factory(\App\Post::class)->make(['user_id' => $user->id,'category_id' => $categories->random()->id]))
-               ->tags()->attach($tags->pluck('id')->random(rand(3,5)));
+//           $user->posts()->save(factory(\App\Post::class)->make(['user_id' => $user->id,'category_id' => $categories->random()->id]))
+//               ->tags()->attach($tags->pluck('id')->random(rand(3,5)));
+//
+//
+//
+//
+//        });
 
-
-
-
+        $tags = factory(\App\Tag::class,20)->create();
+        factory(\App\Post::class,50)->create()->each(function ($post) use ($tags){
+            $tags->shuffle();
+            $post->tags()->attach($tags->pluck('id')->random(rand(3,5)));
         });
     }
 }

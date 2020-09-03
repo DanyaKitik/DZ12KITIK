@@ -28,7 +28,7 @@ class ModifyPost extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('posts');
         });
     }
 }
